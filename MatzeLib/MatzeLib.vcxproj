@@ -96,6 +96,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Solution.h" />
     <ClInclude Include="src\Util\ImGuiUtil.h" />
     <ClInclude Include="src\Util\Rechner.h" />
     <ClInclude Include="src\Util\TextureLoader.h" />

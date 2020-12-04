@@ -9,12 +9,19 @@
     <ClInclude Include="src\Util\ImGuiUtil.h">
       <Filter>Util</Filter>
     </ClInclude>
+    <ClInclude Include="src\Util\Rechner.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Util\TextureLoader.h">
+      <Filter>Util</Filter>
+    </ClInclude>
     <ClInclude Include="src\Util\Window.h">
       <Filter>Util</Filter>
     </ClInclude>
-    <ClInclude Include="src\Util\Rechner.h" />
-    <ClInclude Include="src\Util\TextureLoader.h" />
-    <ClInclude Include="src\Util\WindowSettings.h" />
+    <ClInclude Include="src\Util\WindowSettings.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Solution.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp" />
@@ -24,6 +31,8 @@
     <ClCompile Include="src\Util\ImGuiUtil.cpp">
       <Filter>Util</Filter>
     </ClCompile>
-    <ClCompile Include="src\Util\Window.cpp" />
+    <ClCompile Include="src\Util\Window.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

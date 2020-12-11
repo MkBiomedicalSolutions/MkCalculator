@@ -24,7 +24,9 @@
 void main()
 {
 	Solution solution;
+	std::cout << sizeof(solution) << std::endl;
 	solution.Run();
+	
 }
 
 //		Copyright MkBiomedicalSolutions 2020 ALL RIGHTS RESERVED		\\

@@ -1,4 +1,24 @@
+///////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+//|	Owner		: Matthias Karasowski									|\\
+\\|				https://github.com/MkBiomedicalSolutions/MkCalculator	|//
+//|	Copyright	: MkBiomedicalSolutions									|\\
+\\|				https://www.mksolutions.at/								|//
+//| Filename	: Solution.h											|\\
+\\|	Version		: 1.0 													|//
+//|	Date		: 30.11.2020											|\\
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\///////////////////////////////////////
+////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+//| 																	|\\
+\\|	Source		:														|//
+//|				ImGui		:https://github.com/ocornut/imgui			|\\
+\\|				glad		:https://glad.dav1d.de/						|//
+//|				GLFW		:https://www.glfw.org/						|\\
+\\|				stb_image	:https://github.com/nothings/stb			|//
+//|																		|\\
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\///////////////////////////////////////
+
 #pragma once
+
 #include <imgui.h>
 #include <iostream>
 #include <windows.h>
@@ -17,7 +37,7 @@
 		void Run() {
 
 			HWND consoleWindow = GetConsoleWindow();
-			ShowWindow(consoleWindow, 0);
+			ShowWindow(consoleWindow, SW_SHOW);
 
 
 
@@ -31,6 +51,8 @@
 			bool settingsopen = false;
 			bool OhmschesGesetzActive = false;
 			bool OhmschesGesetzButton = false;
+			bool  GeometryActive = false;
+			bool  GeometryButton = false;
 			float textCol[4] = { 0.176f, 0.169f, 0.329f, 1.0f };//default Menuebar Background
 
 
@@ -62,8 +84,6 @@
 				rechner.ChildWindow();
 				rechner.MainMenue(settingsopen);
 
-
-
 				if (rechner.HelpIconButton == true)
 				{
 					ImGui::SetCursorPos(ImVec2{ ImGui::GetContentRegionAvailWidth() / 2 - 20,50 });
@@ -84,7 +104,6 @@
 					ImGui::PushFont(FontBig);
 					ImGui::Text("Calculatortyps:");
 					ImGui::PopFont();
-
 					ImGui::SetCursorPos(ImVec2{ ImGui::GetContentRegionAvailWidth() / 2 - 60,100 });
 					if(OhmschesGesetzButton == false)
 					{
@@ -98,8 +117,32 @@
 						OhmschesGesetzButton = true;
 						int Hochzahl = 0;
 						rechner.OhmschesGesetz();
-
-
+						if(rechner.ReturnSpannung == true)
+							ImGui::Text("%lf*10^%d", rechner.Spannung, rechner.Erg_Hochzahl);
+						if(rechner.ReturnStromstaerke ==true )
+							ImGui::Text("%lf*10^%d", rechner.Stromstaerke, rechner.Erg_Hochzahl);
+						if(rechner.ReturnWiderstand == true)
+							ImGui::Text("%lf*10^%d", rechner.Widerstand, rechner.Erg_Hochzahl);
+					}
+					ImGui::SetCursorPos(ImVec2{ ImGui::GetContentRegionAvailWidth() / 2 - 60,130 });
+					if (GeometryButton == false)
+					{
+						if (ImGui::Button("Geometry"))
+						{
+							GeometryActive = true;
+						}
+					}
+					if (GeometryActive == true)
+					{
+						GeometryButton = true;
+						int Hochzahl = 0;
+						rechner.Rechteck();
+						ImGui::Begin("Simulation");
+						ImVec2 p = ImGui::GetCursorScreenPos();
+						ImGui::GetWindowDrawList()->AddRectFilled({ p.x, p.y }, { p.x + 400.0f, p.y + 200.0f }, IM_COL32_WHITE);
+						ImGui::GetWindowDrawList()->AddText(ImGui::GetFont(), ImGui::GetFontSize() * 2.0f, ImVec2(p.x +200.0f, p.y + 200.0f), IM_COL32(255, 255, 255, 255), "x", NULL, 0.0f);
+						ImGui::GetWindowDrawList()->AddText(ImGui::GetFont(), ImGui::GetFontSize() * 2.0f, ImVec2(p.x + 410.0f, p.y + 66.6f), IM_COL32(255, 255, 255, 255), "y", NULL, 0.0f);
+						ImGui::End();
 					}
 				}
 				
@@ -115,3 +158,4 @@
 			Util::ImGuiShutdown();
 		}
 	};
+	//		Copyright MkBiomedicalSolutions 2020 ALL RIGHTS RESERVED		\\

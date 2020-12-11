@@ -21,7 +21,6 @@
 
 #include <imgui.h>
 #include <array>
-#include <iostream>
 
 #include "TextureLoader.h"
 #include "Util/ImGuiUtil.h"
@@ -44,17 +43,14 @@ namespace Util
 		int R_Hochzahl;
 		int I_Hochzahl;
 		int U_Hochzahl;
-		int Erg_Hochzahl = 0;
 		int Hochzahl = 0;
 		int itemOld = 0;
 		int currentItem = 3;
+		int currentItem1 = 3;
+		int currentItem2 = 3;
 		const char* listbox_items[9] = { "   T", "   G", "   M","   k", "   V", "   m", "   u", "   n", "   p" };
 		const char* listbox_items1[9] = { "   T", "   G", "   M","   k", "Ohm", "   m", "   u", "   n", "   p" };
 		const char* listbox_items2[9] = { "   T", "   G", "   M","   k", "   A", "   m", "   u", "   n", "   p" };
-		int listbox_item_current = 4;
-		float Spannung = 0;
-		float Widerstand = 0;
-		float Stromstaerke = 0;
 		float ergebnis = 0;
 		float childCol[4] = { 0.176f, 0.169f, 0.329f, 1.0f };//default Child Background 
 		float selectedChildCol[4] = { 1.0f, 0.0f, 0.0f, 1.0f };//default Child Background 
@@ -75,7 +71,13 @@ namespace Util
 		bool HelpIconButton = false;
 		bool SettingIconButton = false;
 		bool CalculatorIconButton = false;
-
+		bool ReturnSpannung = false;
+		bool ReturnStromstaerke = false;
+		bool ReturnWiderstand = false;
+		int Erg_Hochzahl = 0;
+		float Spannung = 0;
+		float Widerstand = 0;
+		float Stromstaerke = 0;
 	public:
 		Rechner() 
 		{
@@ -100,19 +102,19 @@ namespace Util
 			ImGui::SameLine();
 			ImGui::PushItemWidth(60);
 			ImGui::ListBox("V [Volt]\nSpannung",&currentItem, listbox_items,8, 2);
-			U_Hochzahl=Hochzahlcorr();
+			U_Hochzahl=CurrentItemToExponent(currentItem);
 			ImGui::SetCursorPos(ImVec2{ 200,200 });
 			ImGui::SetNextItemWidth(200);
 			ImGui::DragFloat("##9902", &Widerstand, 0.5f);
 			ImGui::SameLine();
-			ImGui::ListBox("R [Ohm]\nWiderstand", &currentItem, listbox_items1, 8, 2);
-			R_Hochzahl = Hochzahl;
+			ImGui::ListBox("R [Ohm]\nWiderstand", &currentItem1, listbox_items1, 8, 2);
+			R_Hochzahl = CurrentItemToExponent(currentItem1);
 			ImGui::SetCursorPos(ImVec2{ 200,300 });
 			ImGui::SetNextItemWidth(200);
 			ImGui::DragFloat("##9903", &Stromstaerke, 0.5f);
 			ImGui::SameLine();
-			ImGui::ListBox("A [Ampere]\nStromstaerke", &currentItem, listbox_items2, 8, 2);
-			I_Hochzahl = Hochzahlcorr();
+			ImGui::ListBox("A [Ampere]\nStromstaerke", &currentItem2, listbox_items2, 8, 2);
+			I_Hochzahl = CurrentItemToExponent(currentItem2);
 
 			if (ImGui::Button("berechnen", ImVec2{ 200,50 }))
 			{
@@ -133,7 +135,11 @@ namespace Util
 						else {
 							Erg_Hochzahl = U_Hochzahl - R_Hochzahl;
 						}
-						ImGui::Text("%lf*10^%d", Stromstaerke, Erg_Hochzahl);
+						ReturnStromstaerke = true;
+						ReturnSpannung = false;
+						ReturnWiderstand = false;
+						currentItem2 = ExponentToCurrentItem(Erg_Hochzahl);
+						
 					}
 
 					if ((bufferOld[0] != bufferNew[0]) && (bufferOld[1] != bufferNew[1]))
@@ -147,7 +153,12 @@ namespace Util
 						else {
 							Erg_Hochzahl = U_Hochzahl - I_Hochzahl;
 						}
-						ImGui::Text("%lf*10^%d", Widerstand, Erg_Hochzahl);
+						ReturnWiderstand = true;
+						ReturnSpannung = false;
+						ReturnStromstaerke = false;
+						currentItem1 = ExponentToCurrentItem(Erg_Hochzahl);
+
+						
 					}
 
 					if ((bufferOld[0] != bufferNew[0]) && (bufferOld[2] != bufferNew[2]))
@@ -161,17 +172,20 @@ namespace Util
 						else {
 							Erg_Hochzahl = R_Hochzahl + I_Hochzahl;
 						}
-						ImGui::Text("%lf*10^%d", Spannung, Erg_Hochzahl);
+						ReturnSpannung = true;
+						ReturnStromstaerke = false;
+						ReturnWiderstand = false;
+						currentItem = ExponentToCurrentItem(Erg_Hochzahl);
 					}
 				}
 			}
 		}
-		int Hochzahlcorr()
+		int CurrentItemToExponent(int Item)
 		{
 
-			if (itemOld != listbox_item_current)
+			if (itemOld != Item)
 			{
-				itemOld = listbox_item_current;
+				itemOld = Item;
 				if (itemOld < 4)
 				{
 					if (itemOld == 3)
@@ -198,6 +212,63 @@ namespace Util
 				}
 			}
 			return Hochzahl;
+		}
+		int ExponentToCurrentItem(int Hochzahl)
+		{
+			int Item = 0;
+			if (itemOld != Hochzahl)
+			{
+				itemOld = Hochzahl;
+				if (itemOld < 4)
+				{
+					if (itemOld == 3)
+						Item = 3;
+					if (itemOld == 6)
+						Item = 2;
+					if (itemOld == 9)
+						Item = 1;
+					if (itemOld == 13)
+						Item = 2;
+				}
+				if (itemOld == 4) //4 = 10^1
+					Item = 0;
+				if (itemOld > 4)
+				{
+					if (itemOld == -3)
+						Item = 5;
+					if (itemOld == -6)
+						Item = 6;
+					if (itemOld == -9)
+						Item = 7;
+					if (itemOld == -13)
+						Item = 8;
+				}
+			}
+			return Item;
+		}
+
+		void Rechteck()
+		{
+			ImGui::SameLine();
+			ImGui::SetCursorPos(ImVec2{ 200,100 });
+			ImGui::SetNextItemWidth(200);
+			ImGui::DragFloat("##9901", &Spannung, 0.5f);
+			ImGui::SameLine();
+			ImGui::PushItemWidth(60);
+			ImGui::ListBox("V [Volt]\nSpannung", &currentItem, listbox_items, 8, 2);
+			U_Hochzahl = CurrentItemToExponent(currentItem);
+			ImGui::SetCursorPos(ImVec2{ 200,200 });
+			ImGui::SetNextItemWidth(200);
+			ImGui::DragFloat("##9902", &Widerstand, 0.5f);
+			ImGui::SameLine();
+			ImGui::ListBox("R [Ohm]\nWiderstand", &currentItem, listbox_items1, 8, 2);
+			R_Hochzahl = Hochzahl;
+			ImGui::SetCursorPos(ImVec2{ 200,300 });
+			ImGui::SetNextItemWidth(200);
+			ImGui::DragFloat("##9903", &Stromstaerke, 0.5f);
+			ImGui::SameLine();
+			ImGui::ListBox("A [Ampere]\nStromstaerke", &currentItem, listbox_items2, 8, 2);
+			I_Hochzahl = CurrentItemToExponent(currentItem);
 		}
 		void SettingsChildWindow() 
 		{
@@ -367,3 +438,4 @@ namespace Util
 		
 	};
 }
+//		Copyright MkBiomedicalSolutions 2020 ALL RIGHTS RESERVED		\\

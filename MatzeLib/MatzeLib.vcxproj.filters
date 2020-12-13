@@ -6,6 +6,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Solution.h" />
     <ClInclude Include="src\Util\ImGuiUtil.h">
       <Filter>Util</Filter>
     </ClInclude>
@@ -21,7 +22,6 @@
     <ClInclude Include="src\Util\WindowSettings.h">
       <Filter>Util</Filter>
     </ClInclude>
-    <ClInclude Include="src\Solution.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp" />

@@ -1,0 +1,8 @@
+C:/Users/Mustermann/Desktop/MatzeLib/MatzeLib/ThirdParty/imgui/examples/example_glfw_vulkan/out/build/x64-Debug (Standard)/CMakeFiles/example_glfw_vulkan.dir
+C:/Users/Mustermann/Desktop/MatzeLib/MatzeLib/ThirdParty/imgui/examples/example_glfw_vulkan/out/build/x64-Debug (Standard)/CMakeFiles/edit_cache.dir
+C:/Users/Mustermann/Desktop/MatzeLib/MatzeLib/ThirdParty/imgui/examples/example_glfw_vulkan/out/build/x64-Debug (Standard)/CMakeFiles/rebuild_cache.dir
+C:/Users/Mustermann/Desktop/MatzeLib/MatzeLib/ThirdParty/imgui/examples/example_glfw_vulkan/out/build/x64-Debug (Standard)/binary_dir/CMakeFiles/edit_cache.dir
+C:/Users/Mustermann/Desktop/MatzeLib/MatzeLib/ThirdParty/imgui/examples/example_glfw_vulkan/out/build/x64-Debug (Standard)/binary_dir/CMakeFiles/rebuild_cache.dir
+C:/Users/Mustermann/Desktop/MatzeLib/MatzeLib/ThirdParty/imgui/examples/example_glfw_vulkan/out/build/x64-Debug (Standard)/binary_dir/src/CMakeFiles/rebuild_cache.dir
+C:/Users/Mustermann/Desktop/MatzeLib/MatzeLib/ThirdParty/imgui/examples/example_glfw_vulkan/out/build/x64-Debug (Standard)/binary_dir/src/CMakeFiles/glfw.dir
+C:/Users/Mustermann/Desktop/MatzeLib/MatzeLib/ThirdParty/imgui/examples/example_glfw_vulkan/out/build/x64-Debug (Standard)/binary_dir/src/CMakeFiles/edit_cache.dir

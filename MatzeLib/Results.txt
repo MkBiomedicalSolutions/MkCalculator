@@ -18,3 +18,12 @@ Flaecheninhalt	:5929
 Umfang		:308
 Diagonale	:108.894
 Umkreisradius	:54.4472
+---------------------------------------------
+Ergebnisse vom: Sun Dec 13 17:33:19 2020
+
+Laenge		:2
+Breite		:2
+Flaecheninhalt	:4
+Umfang		:8
+Diagonale	:2.82843
+Umkreisradius	:1.41421

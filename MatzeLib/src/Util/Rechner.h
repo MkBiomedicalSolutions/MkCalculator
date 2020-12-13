@@ -81,6 +81,8 @@ namespace Util
 			std::array<bool, 7> check;
 			std::array<float, 4> bufferNew, bufferOld;
 
+	
+
 			ImFont* Font = ImGui::GetIO().Fonts->AddFontFromFileTTF("arial.ttf", 20);
 
 		public:
@@ -105,6 +107,7 @@ namespace Util
 			bool ReturnStromstaerke = false;
 			bool CalculatorIconButton = false;
 			char* Klicktime;
+			std::string ChooseLanguage = "English";
 		public:
 			Rechner() 
 			{
@@ -456,8 +459,13 @@ namespace Util
 					{
 						LogConsole();
 					}
-					else {
-					
+					if (ImGui::BeginMenu("Language"))
+					{
+						if (ImGui::MenuItem("German"))
+							ChooseLanguage = "German";
+						if (ImGui::MenuItem("English"))
+							ChooseLanguage = "English";
+						ImGui::EndMenu();
 					}
 				}
 				ImGui::EndMenuBar();
@@ -557,6 +565,7 @@ namespace Util
 					ImGui::Begin("Log Console", 0, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
 					ImGui::SetWindowSize(ImVec2{ 500, 500 });
 					ImGui::Text("!Attention please!");
+					ImGui::Text("FPS: %.2f", ImGui::GetIO().Framerate);
 					ImGui::End();
 			}
 

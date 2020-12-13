@@ -18,6 +18,8 @@ namespace Util
 
 		glfwMakeContextCurrent(m_Window);
 
+		glfwSwapInterval(0);
+
 		if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
 			throw std::runtime_error("Failed to initialize Glad!");
 	}

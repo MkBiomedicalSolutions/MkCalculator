@@ -1,4 +1,4 @@
-///////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+///////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 //|	Owner		: Matthias Karasowski									|\\
 \\|				https://github.com/MkBiomedicalSolutions/MkCalculator	|//
 //|	Copyright	: MkBiomedicalSolutions									|\\
@@ -23,6 +23,7 @@
 #include <iostream>
 #include <imgui.h>
 #include <ctime>
+#include <string>
 
 
 #include "Util/Rechner.h"
@@ -41,11 +42,21 @@ class Solution
 		bool  GeometryButton = false;
 		bool HeadlineCalculatorTyps = true;
 		float textCol[4] = { 0.176f, 0.169f, 0.329f, 1.0f };//default Menuebar Background
+		const char* help = "Ohm";
+		int j = 0;
+		
+
+		std::string English[11] = {"Help:","Settings:","Calculatortyps","Ohms_law","Geometry","Length","Width","Area","Scope","Diagonal","Permimeterradius"};
+		std::string German[11] = {"Hilfe:","Einstellungen:","Taschenrechnertypen:","Ohmsche´s Gesetz","Geometrie","Laenge","Breite","Flaecheninhalt","Umfang","Diagonale","Umkreisradius"};
+
+		std::string text[11];
+
 
 
 		Solution() = default;
 
 		void Run() {
+
 			HWND consoleWindow = GetConsoleWindow();
 			ShowWindow(consoleWindow, SW_SHOW);
 
@@ -54,6 +65,7 @@ class Solution
 			Util::Window window(1280, 720, "Calculator");
 			Util::ImGuiInit(window);
 			Util::Rechner rechner;
+
 
 			//auto& colors = ImGui::GetStyle().Colors;
 			ImFont* Font = ImGui::GetIO().Fonts->AddFontFromFileTTF("arial.ttf", 20);
@@ -64,6 +76,16 @@ class Solution
 
 			while (window.isOpen())
 			{
+
+				if (rechner.ChooseLanguage == "English")
+				{
+					for (j = 0; j <= 10; j++) { text[j] = English[j]; }
+				}
+				if (rechner.ChooseLanguage == "German")
+				{
+					for (j = 0; j <= 10; j++) { text[j] = German[j]; }
+				}
+
 				time_t ttime = time(0);
 				char* dt = ctime(&ttime);
 
@@ -83,21 +105,19 @@ class Solution
 				ImGui::Begin("##9900", 0, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDecoration);
 				rechner.ChildWindow();
 				rechner.MainMenue(settingsopen);
-				
-	
 			
 				if (rechner.HelpIconButton == true)
 				{
 					ImGui::SetCursorPos(ImVec2{ ImGui::GetContentRegionAvailWidth() / 2 - 20,50 });
 					ImGui::PushFont(FontBig);
-					ImGui::Text("Help");
+					ImGui::Text(text[0].c_str());
 					ImGui::PopFont();
 				}
 				if (rechner.SettingIconButton == true)
 				{
 					ImGui::SetCursorPos(ImVec2{ ImGui::GetContentRegionAvailWidth() / 2 - 50,50 });
 					ImGui::PushFont(FontBig);
-					ImGui::Text("Settings:");
+					ImGui::Text(text[1].c_str());
 					ImGui::PopFont();
 				}
 				if (rechner.CalculatorIconButton == true)
@@ -106,13 +126,13 @@ class Solution
 					{
 						ImGui::SetCursorPos(ImVec2{ ImGui::GetContentRegionAvailWidth() / 2 - 60,50 });
 						ImGui::PushFont(FontBig);
-						ImGui::Text("Calculatortyps:");
+						ImGui::Text(text[2].c_str());
 						ImGui::PopFont();
 					}
 					ImGui::SetCursorPos(ImVec2{ ImGui::GetContentRegionAvailWidth() / 2 - 60,100 });
 					if(OhmschesGesetzButton == false)
 					{
-						if (ImGui::Button("Ohmsches Gesetz")) 
+						if (ImGui::Button(text[3].c_str()))
 						{
 							OhmschesGesetzActive = true;
 							HeadlineCalculatorTyps = false;
@@ -137,7 +157,7 @@ class Solution
 					if (GeometryButton == false)
 					{
 						
-						if (ImGui::Button("Geometry"))
+						if (ImGui::Button(text[4].c_str()))
 						{
 							GeometryActive = true;
 							HeadlineCalculatorTyps = false;
@@ -150,12 +170,13 @@ class Solution
 						rechner.Rechteck();
 						if (rechner.Rechteckberechnungen == true)
 						{
-							ImGui::Text("laenge = %lf", rechner.laenge2);
-							ImGui::Text("breite = %lf", rechner.breite2);
-							ImGui::Text("Flaecheninhalt = %lf", rechner.Flaecheninhalt);
-							ImGui::Text("Umfang = %lf", rechner.Umfang);
-							ImGui::Text("Diagonale = %lf", rechner.Diagonale);
-							ImGui::Text("Umkreisradius = %lf", rechner.Umkreisradius);
+
+							ImGui::Text("%s = %lf", text[5].c_str(),rechner.laenge2);
+							ImGui::Text("%s = %lf", text[6].c_str(),rechner.breite2);
+							ImGui::Text("%s= %lf", text[7].c_str(),rechner.Flaecheninhalt);
+							ImGui::Text("%s = %lf", text[8].c_str(),rechner.Umfang);
+							ImGui::Text("%s = %lf", text[9].c_str(),rechner.Diagonale);
+							ImGui::Text("%s = %lf", text[10].c_str(),rechner.Umkreisradius);
 							ImGui::Text("Innenkreiswinkel = Alpha = Betha = Gamma = delta = 90°");
 							rechner.Klicktime = dt;
 						}

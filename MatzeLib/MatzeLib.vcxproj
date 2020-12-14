@@ -106,6 +106,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Rechner.cpp" />
+    <ClCompile Include="src\Settings.cpp" />
+    <ClCompile Include="src\Solution.cpp" />
     <ClCompile Include="src\Util\ImGuiBuild.cpp" />
     <ClCompile Include="src\Util\ImGuiUtil.cpp" />
     <ClCompile Include="src\Util\Window.cpp" />

@@ -96,9 +96,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Rechner.h" />
+    <ClInclude Include="src\Settings.h" />
     <ClInclude Include="src\Solution.h" />
     <ClInclude Include="src\Util\ImGuiUtil.h" />
-    <ClInclude Include="src\Util\Rechner.h" />
     <ClInclude Include="src\Util\TextureLoader.h" />
     <ClInclude Include="src\Util\Window.h" />
     <ClInclude Include="src\Util\WindowSettings.h" />
@@ -108,6 +109,7 @@
     <ClCompile Include="src\Util\ImGuiBuild.cpp" />
     <ClCompile Include="src\Util\ImGuiUtil.cpp" />
     <ClCompile Include="src\Util\Window.cpp" />
+    <ClCompile Include="src\Util\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="ThirdParty\GLFW\GLFW.vcxproj">

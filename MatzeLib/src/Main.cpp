@@ -17,14 +17,14 @@
 //|																		|\\
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\///////////////////////////////////////
 
-#define STB_IMAGE_IMPLEMENTATION
-
 #include "Solution.h"
 
-void main()
+int main(int argc, char* argv[])
 {
 	Solution solution;
-	solution.Run();	
-}
 
+	solution.Run();
+
+	return EXIT_SUCCESS;
+}
 //		Copyright MkBiomedicalSolutions 2020 ALL RIGHTS RESERVED		\\

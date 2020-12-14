@@ -25,19 +25,14 @@
 #include <fstream>
 
 #include "Util/ImGuiUtil.h"
-#include "TextureLoader.h"
 
-namespace Util 
-{
+
+
 	class Rechner
 	{
 		
 		private:
 
-			int i = 0;
-			int i1 = 0;
-			int	i2 = 0;
-			int	i3 = 0;
 			int itemOld = 0;
 			int Hochzahl = 0;
 			int R_Hochzahl = 0;
@@ -51,24 +46,11 @@ namespace Util
 			int currentItem4 = 3;
 			int currentItem5 = 3;
 
-			unsigned int HelpIcon;
-			unsigned int SettingIcon;
-			unsigned int CalculatorIcon;
-
 			float laenge = 0;
 			float breite = 0;
 			float ergebnis = 0;
-			float childCol[4] = { 0.176f, 0.169f, 0.329f, 1.0f };
-			float windowCol[4] = { 0.168f, 0.165f, 0.227f, 1.0f };
-			float selectedChildCol[4] = { 1.0f, 0.0f, 0.0f, 1.0f };
-			float menuebarCol[4] = { 0.176f, 0.169f, 0.329f, 1.0f };
 
 			bool ScrollToBottom;
-			bool helpState = false;
-			bool closeWindow = false;
-			bool settingsState = false;
-			bool LogConsoleState = false;
-			bool calculationState = false;
 
 			const char* listbox_items[9] = { "   T", "   G", "   M","   k", "   V", "   m", "   u", "   n", "   p" };
 			const char* listbox_items1[9] = { "   T", "   G", "   M","   k", "Ohm", "   m", "   u", "   n", "   p" };
@@ -78,12 +60,8 @@ namespace Util
 
 			ImGuiTextBuffer Buf;
 
-			std::array<bool, 7> check;
+
 			std::array<float, 4> bufferNew, bufferOld;
-
-	
-
-			ImFont* Font = ImGui::GetIO().Fonts->AddFontFromFileTTF("arial.ttf", 20);
 
 		public:
 			int Erg_Hochzahl = 0;
@@ -97,28 +75,21 @@ namespace Util
 			float Flaecheninhalt = 0;
 			float Widerstand = 0;
 			float Stromstaerke = 0;
-			float Rechteckberechnungen = false;
+	
 			bool Save = false;
-			bool HelpIconButton = false;
 			bool ReturnSpannung = false;
 			bool ReturnWiderstand = false;
 			bool RechnerAllowEnter = true;
-			bool SettingIconButton = false;
+			bool Rechteckberechnungen = false;
 			bool ReturnStromstaerke = false;
-			bool CalculatorIconButton = false;
+
 			char* Klicktime;
-			std::string ChooseLanguage = "English";
+
 		public:
 			Rechner() 
 			{
-				CalculatorIcon = Util::LoadTexture("CalculationIcon.png");
-				SettingIcon = Util::LoadTexture("SettingIcon.png");
-				HelpIcon = Util::LoadTexture("HelpIcon.png");
 				bufferNew = { 0,0,0,0 };
 				bufferOld = { 0,0,0,0 };
-				ImGui::GetStyle().Colors[ImGuiCol_ChildBg] = ImVec4{ childCol[0], childCol[1], childCol[2], childCol[3] };
-				ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImVec4{ windowCol[0], windowCol[1], windowCol[2], windowCol[3] };
-				ImGui::GetStyle().Colors[ImGuiCol_MenuBarBg] = ImVec4{ menuebarCol[0], menuebarCol[1], menuebarCol[2], menuebarCol[3] };
 			}
 
 			void OhmschesGesetz()
@@ -381,196 +352,24 @@ namespace Util
 					if (myfile.is_open())
 					{
 						myfile << "---------------------------------------------\n";
-						myfile << "Ergebnisse vom: " << Klicktime <<"\n";
-						myfile << "Laenge		:" << laenge2 <<"\n";
-						myfile << "Breite		:" << breite2 <<"\n";
-						myfile << "Flaecheninhalt	:" << Flaecheninhalt <<"\n";
-						myfile << "Umfang		:" << Umfang <<"\n";
-						myfile << "Diagonale	:" << Diagonale <<"\n";
-						myfile << "Umkreisradius	:" << Umkreisradius <<"\n";
+						myfile << "Ergebnisse vom: " << Klicktime << "\n";
+						myfile << "Laenge		:" << laenge2 << "\n";
+						myfile << "Breite		:" << breite2 << "\n";
+						myfile << "Flaecheninhalt	:" << Flaecheninhalt << "\n";
+						myfile << "Umfang		:" << Umfang << "\n";
+						myfile << "Diagonale	:" << Diagonale << "\n";
+						myfile << "Umkreisradius	:" << Umkreisradius << "\n";
 
 						myfile.close();
 					}
 					else std::cout << "Unable to open file" << std::endl;
 				}
 
-			}
-
-			void SettingsChildWindow() 
-			{
-				ImGui::ColorEdit4("Child Background", childCol);
-				ImGui::GetStyle().Colors[ImGuiCol_ChildBg] = ImVec4{ childCol[0], childCol[1], childCol[2], childCol[3] };
-				ImGui::GetStyle().Colors[ImGuiCol_Button] = ImVec4{ childCol[0], childCol[1], childCol[2], childCol[3] };
-				ImGui::ColorEdit4("Selected Button", selectedChildCol);
-				ImGui::GetStyle().Colors[ImGuiCol_Button] = ImVec4{ selectedChildCol[0], selectedChildCol[1], selectedChildCol[2], selectedChildCol[3] };
-			}
-
-			void SettingsWindow() 
-			{
-				ImGui::ColorEdit4("Window Background", windowCol);
-				ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImVec4{ windowCol[0], windowCol[1], windowCol[2], windowCol[3] };
-			}
-
-			void SettingsMenuebar() 
-			{
-				ImGui::ColorEdit4("menuebar Background", menuebarCol);
-				ImGui::GetStyle().Colors[ImGuiCol_MenuBarBg] = ImVec4{ menuebarCol[0], menuebarCol[1], menuebarCol[2], menuebarCol[3] };
 
 			}
-
-			void MainMenue(bool& settingsopen) {
-				if (ImGui::BeginMenuBar())
-				{
-					if (ImGui::BeginMenu("File"))
-					{
-						if (ImGui::MenuItem("Open ", "CTRL+O"));
-						if (ImGui::MenuItem("Save ", "CTRL+S"));
-						if (ImGui::MenuItem("Close"))
-							closeWindow = true;
-						ImGui::EndMenu();
-					}
-					if (ImGui::BeginMenu("Settings")) {
-
-							SettingsChildWindow();
-							SettingsWindow();
-							SettingsMenuebar();
-							ImGui::EndMenu();
-						}
-
-					if (ImGui::BeginMenu("About"))
-						ImGui::EndMenu();
-
-					if (ImGui::BeginMenu("Help"))
-						ImGui::EndMenu();
-					if (ImGui::BeginMenu("LogConsole"))
-					{
-						if (i == 0)
-						{
-							i++;
-							LogConsoleState = true;
-						}
-						else {
-							i = 0;
-							LogConsoleState = false;
-						}
-						ImGui::EndMenu();
-					}
-					if(LogConsoleState== true)
-					{
-						LogConsole();
-					}
-					if (ImGui::BeginMenu("Language"))
-					{
-						if (ImGui::MenuItem("German"))
-							ChooseLanguage = "German";
-						if (ImGui::MenuItem("English"))
-							ChooseLanguage = "English";
-						ImGui::EndMenu();
-					}
-				}
-				ImGui::EndMenuBar();
-			}
-
-			bool CloseWindow() 
-			{
-				return closeWindow;
-			}
-
-			void ImageButton(std::string WhichButton,std::array<bool,7>states1,unsigned int Icon,int counter, int counterZero1, int counterZero2)
-			{
-				if (states1[0] == true)
-				{
-					ImGui::GetStyle().Colors[ImGuiCol_Button] = ImVec4{ selectedChildCol[0], selectedChildCol[1], selectedChildCol[2], selectedChildCol[3] };
-				}
-				else {
-					ImGui::GetStyle().Colors[ImGuiCol_Button] = ImVec4{ childCol[0], childCol[1], childCol[2], childCol[3] };
-				}
-
-				if (ImGui::ImageButton((ImTextureID)Icon, { 50.0f, 50.0f }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 }))
-				{
-					states1[0] = true;
-					states1[1] = false;
-					states1[2] = false;
-
-					if (counter == 0) {
-						states1[3] = true;
-						states1[4] = false;
-						states1[5] = false;
-						counterZero1 = 0;
-						counterZero2 = 0;
-						counter++;
-					}
-					else {
-						counter = 0;
-						states1[0] = false;
-						states1[3] = false;
-					}
-				}
-				if (WhichButton == "Calculator")
-				{
-					calculationState = states1[0];
-					settingsState = states1[1];
-					helpState= states1[2];
-					CalculatorIconButton= states1[3];
-					SettingIconButton=states1[4];
-					HelpIconButton= states1[5];
-					i1 = counter;
-					i2= counterZero1;
-					i3= counterZero2;
-				}
-				if (WhichButton == "Setting")
-				{
-					settingsState = states1[0];
-					helpState = states1[1];
-					calculationState = states1[2];
-					SettingIconButton = states1[3];
-					HelpIconButton = states1[4];
-					CalculatorIconButton = states1[5];
-					i2 = counter;
-					i3 = counterZero1;
-					i1 = counterZero2;
-				}
-		
-				if (WhichButton == "Help")
-				{
-					helpState = states1[0];
-					calculationState = states1[1];
-					settingsState = states1[2];
-					HelpIconButton = states1[3];
-					CalculatorIconButton = states1[4];
-					SettingIconButton = states1[5];
-					i3 = counter;
-					i1 = counterZero1;
-					i2 = counterZero2;
-				}
-			}
-		
-			void ChildWindow() 
-			{
-				ImGui::BeginChild("Child", ImVec2{ 73.5f, 0.0f }, true);
-
-				check = { calculationState,settingsState,helpState,CalculatorIconButton,SettingIconButton,HelpIconButton };
-				ImageButton("Calculator",check,CalculatorIcon,i1,i2,i3);
-				check = { settingsState,helpState,calculationState,SettingIconButton,HelpIconButton,CalculatorIconButton };
-				ImageButton("Setting",check,SettingIcon,i2,i3,i1);
-				check = { helpState,calculationState,settingsState,HelpIconButton,CalculatorIconButton,SettingIconButton };
-				ImageButton("Help",check,HelpIcon,i3,i1,i2);
-
-				ImGui::EndChild();
-			}
-
-			void LogConsole() 
-			{
-
-					ImGui::Begin("Log Console", 0, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
-					ImGui::SetWindowSize(ImVec2{ 500, 500 });
-					ImGui::Text("!Attention please!");
-					ImGui::Text("FPS: %.2f", ImGui::GetIO().Framerate);
-					ImGui::End();
-			}
-
-
+			
+			
 		
 	};
-}
+
 //		Copyright MkBiomedicalSolutions 2020 ALL RIGHTS RESERVED		\\

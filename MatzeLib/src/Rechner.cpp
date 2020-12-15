@@ -21,40 +21,22 @@
 
 #include "Rechner.h"
 
+
+
 	void Rechner::OhmschesGesetz()
 	{
-		ImGui::SameLine();
-		ImGui::SetCursorPos(ImVec2{ 200,100 });
-		ImGui::SetNextItemWidth(200);
-		ImGui::DragFloat("##9901", &Spannung, 0.5f);
-		ImGui::SameLine();
-		ImGui::PushItemWidth(100);
-		ImGui::Combo("V [Volt] Spannung", &currentItem, listbox_items, 8);
-		U_Hochzahl = CurrentItemToExponent(currentItem);
-
-		ImGui::SetCursorPos(ImVec2{ 200,200 });
-		ImGui::SetNextItemWidth(200);
-		ImGui::DragFloat("##9902", &Widerstand, 0.5f);
-		ImGui::SameLine();
-		ImGui::PushItemWidth(100);
-		ImGui::Combo("R [Ohm] Widerstand", &currentItem1, listbox_items1, 8);
-		R_Hochzahl = CurrentItemToExponent(currentItem1);
-
-		ImGui::SetCursorPos(ImVec2{ 200,300 });
-		ImGui::SetNextItemWidth(200);
-		ImGui::DragFloat("##9903", &Stromstaerke, 0.5f);
-		ImGui::SameLine();
-		ImGui::PushItemWidth(100);
-		ImGui::Combo("A [Ampere] Stromstaerke", &currentItem2, listbox_items2, 8);
-		I_Hochzahl = CurrentItemToExponent(currentItem2);
-
-		ImGui::SetCursorPos(ImVec2{ 200,400 });
-		ImGui::SetNextItemWidth(200);
-		ImGui::DragFloat("##9904", &Leistung, 0.5f);
-		ImGui::SameLine();
-		ImGui::PushItemWidth(100);
-		ImGui::Combo("P [Watt] Leistung", &currentItem3, listbox_items3, 8);
-		P_Hochzahl = CurrentItemToExponent(currentItem3);
+		Array = Rhf.ComboList(200, 100, 200, "##9901", &Spannung, 100, "V [Volt] Spannung", &currentItem, listbox_items, U_Hochzahl);
+		Spannung = Array[0];
+		U_Hochzahl = Array[1];
+		Array = Rhf.ComboList(200, 200, 200, "##9902", &Widerstand, 100, "R [Ohm] Widerstand", &currentItem1, listbox_items1, R_Hochzahl);
+		Widerstand = Array[0];
+		R_Hochzahl = Array[1];
+		Array = Rhf.ComboList(200, 300, 200, "##9903", &Stromstaerke, 100, "A [Ampere] Stromstaerke", &currentItem2, listbox_items2, I_Hochzahl);
+		Stromstaerke = Array[0];
+		I_Hochzahl = Array[1];
+		Array = Rhf.ComboList(200, 400, 200, "##9904", &Leistung, 100, "P [Watt] Leistung", &currentItem3, listbox_items3, P_Hochzahl);
+		Leistung = Array[0];
+		P_Hochzahl = Array[1];
 
 		if (ImGui::Button("berechnen", ImVec2{ 200,50 }))
 		{
@@ -79,7 +61,7 @@
 				ReturnSpannung = false;
 				ReturnWiderstand = false;
 				ReturnStromstaerke = true;
-				currentItem2 = ExponentToCurrentItem(Erg_Hochzahl);
+				currentItem2 = Rhf.ExponentToCurrentItem(Erg_Hochzahl);
 			}
 			if ((bufferOld[0] != bufferNew[0]) && (bufferOld[1] != bufferNew[1]))
 			{
@@ -98,7 +80,7 @@
 				ReturnSpannung = false;
 				ReturnWiderstand = true;
 				ReturnStromstaerke = false;
-				currentItem1 = ExponentToCurrentItem(Erg_Hochzahl);
+				currentItem1 = Rhf.ExponentToCurrentItem(Erg_Hochzahl);
 			}
 			if ((bufferOld[0] != bufferNew[0]) && (bufferOld[2] != bufferNew[2]))
 			{
@@ -117,14 +99,13 @@
 				ReturnSpannung = true;
 				ReturnWiderstand = false;
 				ReturnStromstaerke = false;
-				currentItem = ExponentToCurrentItem(Erg_Hochzahl);
+				currentItem = Rhf.ExponentToCurrentItem(Erg_Hochzahl);
 			}
 			if ((bufferOld[3] != bufferNew[3]) && (bufferOld[0] != bufferNew[0]))
 			{
 				bufferOld = bufferNew;
 				Spannung = Leistung / Stromstaerke;
 				Widerstand = Leistung / (Stromstaerke * Stromstaerke);
-				std::cout << Spannung << std::endl;
 
 				if (P_Hochzahl < 0 && I_Hochzahl>0) {
 					Erg_Hochzahl = P_Hochzahl + I_Hochzahl;
@@ -132,7 +113,7 @@
 				else {
 					Erg_Hochzahl = P_Hochzahl - I_Hochzahl;
 				}
-				currentItem = ExponentToCurrentItem(Erg_Hochzahl);
+				currentItem = Rhf.ExponentToCurrentItem(Erg_Hochzahl);
 			}
 			if ((bufferOld[3] != bufferNew[3]) && (bufferOld[2] != bufferNew[2]))
 			{
@@ -146,9 +127,8 @@
 				else {
 					Erg_Hochzahl = P_Hochzahl + R_Hochzahl;
 				}
-				currentItem = ExponentToCurrentItem(Erg_Hochzahl);
+				currentItem = Rhf.ExponentToCurrentItem(Erg_Hochzahl);
 			}
-
 			if ((bufferOld[3] != bufferNew[3]) && (bufferOld[1] != bufferNew[1]))
 			{
 				bufferOld = bufferNew;
@@ -161,75 +141,9 @@
 				else {
 					Erg_Hochzahl = P_Hochzahl - R_Hochzahl;
 				}
+				currentItem = Rhf.ExponentToCurrentItem(Erg_Hochzahl);
 			}
 		}
-	}
-
-	int Rechner::CurrentItemToExponent(int Item)
-	{
-		if (itemOld != Item)
-		{
-			itemOld = Item;
-			if (itemOld < 4)
-			{
-				if (itemOld == 3)
-					Hochzahl = 3;
-				if (itemOld == 2)
-					Hochzahl = 6;
-				if (itemOld == 1)
-					Hochzahl = 9;
-				if (itemOld == 2)
-					Hochzahl = 13;
-			}
-			if (itemOld == 4) //4 = 10^1
-				Hochzahl = 0;
-			if (itemOld > 4)
-			{
-				if (itemOld == 5)
-					Hochzahl = -3;
-				if (itemOld == 6)
-					Hochzahl = -6;
-				if (itemOld == 7)
-					Hochzahl = -9;
-				if (itemOld == 8)
-					Hochzahl = -13;
-			}
-		}
-		return Hochzahl;
-	}
-
-	int Rechner::ExponentToCurrentItem(int Hochzahl)
-	{
-		int Item = 0;
-		if (itemOld != Hochzahl)
-		{
-			itemOld = Hochzahl;
-			if (itemOld < 4)
-			{
-				if (itemOld == 3)
-					Item = 3;
-				if (itemOld == 6)
-					Item = 2;
-				if (itemOld == 9)
-					Item = 1;
-				if (itemOld == 13)
-					Item = 2;
-			}
-			if (itemOld == 4) //4 = 10^1
-				Item = 0;
-			if (itemOld > 4)
-			{
-				if (itemOld == -3)
-					Item = 5;
-				if (itemOld == -6)
-					Item = 6;
-				if (itemOld == -9)
-					Item = 7;
-				if (itemOld == -13)
-					Item = 8;
-			}
-		}
-		return Item;
 	}
 
 	void Rechner::Rechteck()
@@ -263,22 +177,9 @@
 			breite = 0;
 		}
 		ImGui::SameLine();
-		if (ImGui::Button("Save", ImVec2{ 200,50 }))
-		{
-			std::ofstream myfile("Results.txt", std::ios::out | std::ios::app);
-			if (myfile.is_open())
-			{
-				myfile << "---------------------------------------------\n";
-				myfile << "Ergebnisse vom: " << Klicktime << "\n";
-				myfile << "Laenge		:" << laenge2 << "\n";
-				myfile << "Breite		:" << breite2 << "\n";
-				myfile << "Flaecheninhalt	:" << Flaecheninhalt << "\n";
-				myfile << "Umfang		:" << Umfang << "\n";
-				myfile << "Diagonale	:" << Diagonale << "\n";
-				myfile << "Umkreisradius	:" << Umkreisradius << "\n";
-				myfile.close();
-			}
-			else std::cout << "Unable to open file" << std::endl;
-		}
+
+		Rhf.Save(200, 50, Klicktime, ItemsRechteck, ItemNamesRechteck);
+	
 	}
+	
 //		Copyright MkBiomedicalSolutions 2020 ALL RIGHTS RESERVED		\\

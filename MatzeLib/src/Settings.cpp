@@ -275,7 +275,7 @@
 			}
 			if (Simulation == true)
 			{
-				ImGui::Begin("Simulation",&Simulation);
+				ImGui::Begin("Simulation",&Simulation, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDocking);
 				ImVec2 p = ImGui::GetCursorScreenPos();
 				ImGui::GetWindowDrawList()->AddRectFilled({ p.x, p.y }, { p.x + 400.0f, p.y + 200.0f }, IM_COL32_WHITE);
 				ImGui::GetWindowDrawList()->AddText(ImGui::GetFont(), ImGui::GetFontSize() * 2.0f, ImVec2(p.x + 200.0f, p.y + 200.0f), IM_COL32(255, 255, 255, 255), "x", NULL, 0.0f);
@@ -301,7 +301,7 @@
 
 	void Settings::LogConsole()
 	{
-		ImGui::Begin("Log Console", 0, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
+		ImGui::Begin("Log Console", 0, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDocking);
 		ImGui::SetWindowSize(ImVec2{ 500, 500 });
 		ImGui::Text("!Attention please!");
 		ImGui::Text("FPS: %.2f", ImGui::GetIO().Framerate);

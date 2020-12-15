@@ -25,14 +25,15 @@
 #include <iostream>
 
 #include "Util/ImGuiUtil.h"
+#include "Rechnerhilfsfunktionen.h"
 
 class Rechner
 {
 		
 	public:
 
-		int itemOld = 0;
-		int Hochzahl = 0;
+		Rechnerhilfsfunktionen Rhf;
+
 		int R_Hochzahl = 0;
 		int I_Hochzahl = 0;
 		int U_Hochzahl = 0;
@@ -58,6 +59,9 @@ class Rechner
 		float Stromstaerke = 0;
 		float Umkreisradius = 0;
 		float Flaecheninhalt = 0;
+
+		float ItemsRechteck[6] = { laenge2,breite2,Flaecheninhalt,Umfang,Diagonale,Umkreisradius };
+		
 		
 		bool Save = false;
 		bool ScrollToBottom;
@@ -68,6 +72,7 @@ class Rechner
 		bool Rechteckberechnungen = false;
 
 		char* Klicktime;
+		char* Array;
 
 		const char* listbox_items[9] = { "   T", "   G", "   M","   k", "   V", "   m", "   u", "   n", "   p" };
 		const char* listbox_items1[9] = { "   T", "   G", "   M","   k", "Ohm", "   m", "   u", "   n", "   p" };
@@ -76,6 +81,10 @@ class Rechner
 		const char* listbox_items4[11] = {"sm","mi","km","m","ya","ft","dm","in","cm","mm","um"};
 
 		ImGuiTextBuffer Buf;
+
+		Rechnerhilfsfunktionen rhf;
+
+		const char* ItemNamesRechteck[6] = { "Laenge		:","Breite		:","Flaecheninhalt	:","Umfang		:","Diagonale	:","Umkreisradius	:" };
 
 		std::array<float, 4> bufferNew, bufferOld;
 
@@ -86,12 +95,9 @@ class Rechner
 		}
 
 		void OhmschesGesetz();
-
-		int CurrentItemToExponent(int Item);
-		
-		int ExponentToCurrentItem(int Hochzahl);
 		
 		void Rechteck();
+		
 		
 };
 //		Copyright MkBiomedicalSolutions 2020 ALL RIGHTS RESERVED		\\

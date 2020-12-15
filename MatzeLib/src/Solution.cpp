@@ -49,7 +49,6 @@
 			}
 
 			Util::ImGuiBeginFrame();
-
 			window.Update();
 			window.Clear();
 

@@ -1,9 +1,9 @@
 ///////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-//|	Owner       : Matthias Karasowski                                   |\\
+//| Owner       : Matthias Karasowski                                   |\\
 \\|             https://github.com/MkBiomedicalSolutions/MkCalculator   |//
 //|	Copyright   : MkBiomedicalSolutions                                 |\\
 \\|             https://www.mksolutions.at/	                            |//
-//| Filename    : Main.cpp                                              |\\
+//| Filename    : Rechnerhilfsfunktionen.h                              |\\
 \\|	Version     : 1.0                                                   |//
 //|	Date        : 30.11.2020                                            |\\
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\///////////////////////////////////////
@@ -17,14 +17,27 @@
 //|                                                                     |\\
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\///////////////////////////////////////
 
-#include "Solution.h"
+#pragma once
 
-int main(int argc, char* argv[])
+#include <string>
+#include <imgui.h>
+
+class Rechnerhilfsfunktionen
 {
-	Solution solution;
+public:
 
-	solution.Run();
+	int itemOld = 0;
+	int Hochzahl = 0;
 
-	return EXIT_SUCCESS;
-}
-//		Copyright MkBiomedicalSolutions 2020 ALL RIGHTS RESERVED		\\
+
+	char* ComboList(int x, int y, int InputFieldWidth, std::string ID, float* Item, int ComboWidth, std::string Name, int* CurrentItem, const char* ItemList[9], int OutputHochzahl);
+
+	int CurrentItemToExponent(int Item);
+
+	int ExponentToCurrentItem(int Hochzahl);
+
+	void Save(int x, int y, char* Klicktime, float Items[], const char* ItemNames[]);
+
+};
+
+//     Copyright MkBiomedicalSolutions 2020 ALL RIGHTS RESERVED      \\

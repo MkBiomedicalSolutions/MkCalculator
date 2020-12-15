@@ -7,6 +7,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Rechner.h" />
+    <ClInclude Include="src\Rechnerhilfsfunktionen.h" />
     <ClInclude Include="src\Settings.h" />
     <ClInclude Include="src\Solution.h" />
     <ClInclude Include="src\Util\ImGuiUtil.h">
@@ -24,6 +25,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Rechner.cpp" />
+    <ClCompile Include="src\Rechnerhilfsfunktionen.cpp" />
+    <ClCompile Include="src\Settings.cpp" />
+    <ClCompile Include="src\Solution.cpp" />
     <ClCompile Include="src\Util\ImGuiBuild.cpp">
       <Filter>Util</Filter>
     </ClCompile>
@@ -36,8 +41,5 @@
     <ClCompile Include="src\Util\stb_image.cpp">
       <Filter>Util</Filter>
     </ClCompile>
-    <ClCompile Include="src\Rechner.cpp" />
-    <ClCompile Include="src\Settings.cpp" />
-    <ClCompile Include="src\Solution.cpp" />
   </ItemGroup>
 </Project>

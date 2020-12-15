@@ -1,1 +1,28 @@
 
+---------------------------------------------
+Ergebnisse vom: Tue Dec 15 09:11:11 2020
+
+Laenge		:0
+Breite		:0
+Flaecheninhalt	:0
+Umfang		:0
+Diagonale	:0
+Umkreisradius	:0
+---------------------------------------------
+Ergebnisse vom: Tue Dec 15 09:12:59 2020
+
+Laenge		:0
+Breite		:0
+Flaecheninhalt	:0
+Umfang		:0
+Diagonale	:0
+Umkreisradius	:0
+---------------------------------------------
+Ergebnisse vom: Tue Dec 15 09:14:42 2020
+
+Laenge		:23
+Breite		:2
+Flaecheninhalt	:46
+Umfang		:50
+Diagonale	:23.0868
+Umkreisradius	:11.5434

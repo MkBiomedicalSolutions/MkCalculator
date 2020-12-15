@@ -21,6 +21,7 @@
 
 #include <string>
 #include <imgui.h>
+#include <array>
 
 class Rechnerhilfsfunktionen
 {
@@ -36,7 +37,7 @@ public:
 
 	int ExponentToCurrentItem(int Hochzahl);
 
-	void Save(int x, int y, char* Klicktime, float Items[], const char* ItemNames[]);
+	void Save(int x, int y, char* Klicktime, std::array<float, 6>& Items, std::array<const char*, 6> ItemNames);
 
 };
 

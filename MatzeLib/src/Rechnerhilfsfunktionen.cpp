@@ -19,6 +19,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <array>
 
 #include "Rechnerhilfsfunktionen.h"
 
@@ -104,7 +105,7 @@ int Rechnerhilfsfunktionen::ExponentToCurrentItem(int Hochzahl)
 	return Item;
 } 
 
-void Rechnerhilfsfunktionen::Save(int x, int y, char* Klicktime, float Items[], const char* ItemNames[])
+void Rechnerhilfsfunktionen::Save(int x, int y, char* Klicktime, std::array<float, 6>& Items, std::array<const char*, 6> ItemNames)
 {
 	if (ImGui::Button("Save", ImVec2{ (float)x, (float)y }))
 	{
@@ -115,7 +116,7 @@ void Rechnerhilfsfunktionen::Save(int x, int y, char* Klicktime, float Items[], 
 			myfile << "---------------------------------------------\n";
 			myfile << "Ergebnisse vom: " << Klicktime << "\n";
 
-			for (int k = 0; k <= sizeof(ItemNames); k++)
+			for (int k = 0; k < ItemNames.size(); k++)
 			{
 				myfile << ItemNames[k] << Items[k] << "\n";
 			}

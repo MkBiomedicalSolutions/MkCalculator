@@ -60,7 +60,7 @@ class Rechner
 		float Umkreisradius = 0;
 		float Flaecheninhalt = 0;
 
-		float ItemsRechteck[6] = { laenge2,breite2,Flaecheninhalt,Umfang,Diagonale,Umkreisradius };
+		std::array<float, 6> ItemsRechteck;
 		
 		
 		bool Save = false;
@@ -84,7 +84,8 @@ class Rechner
 
 		Rechnerhilfsfunktionen rhf;
 
-		const char* ItemNamesRechteck[6] = { "Laenge		:","Breite		:","Flaecheninhalt	:","Umfang		:","Diagonale	:","Umkreisradius	:" };
+		std::array<const char*, 6> ItemNamesRechteck = { "Laenge		:","Breite		:","Flaecheninhalt	:","Umfang		:","Diagonale	:","Umkreisradius	:" };
+
 
 		std::array<float, 4> bufferNew, bufferOld;
 

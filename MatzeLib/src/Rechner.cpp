@@ -177,7 +177,7 @@
 			breite = 0;
 		}
 		ImGui::SameLine();
-
+		ItemsRechteck = { laenge2,breite2,Flaecheninhalt,Umfang,Diagonale,Umkreisradius };
 		Rhf.Save(200, 50, Klicktime, ItemsRechteck, ItemNamesRechteck);
 	
 	}

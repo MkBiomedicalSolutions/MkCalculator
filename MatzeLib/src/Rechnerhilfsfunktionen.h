@@ -30,12 +30,14 @@ public:
 	int itemOld = 0;
 	int Hochzahl = 0;
 
+	Rechnerhilfsfunktionen() = default;
+	~Rechnerhilfsfunktionen() = default;
 
-	char* ComboList(int x, int y, int InputFieldWidth, std::string ID, float* Item, int ComboWidth, std::string Name, int* CurrentItem, const char* ItemList[9], int OutputHochzahl);
+	char* ComboList(int x, int y, int InputFieldWidth, std::string ID, float* Item, int ComboWidth, std::string Name, const char* CurrentItem, const char* ItemList[], int OutputHochzahl);
 
 	int CurrentItemToExponent(int Item);
 
-	int ExponentToCurrentItem(int Hochzahl);
+	int ExponentToCurrentItem(int Hochzahl2);
 
 	void Save(int x, int y, char* Klicktime, std::array<float, 6>& Items, std::array<const char*, 6> ItemNames);
 

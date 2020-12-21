@@ -23,14 +23,27 @@
 
 #include "Rechnerhilfsfunktionen.h"
 
-char* Rechnerhilfsfunktionen::ComboList(int x, int y, int InputFieldWidth, std::string ID, float *Item, int ComboWidth, std::string Name, int* CurrentItem, const char* ItemList[9], int OutputHochzahl)
+char* Rechnerhilfsfunktionen::ComboList(int x, int y, int InputFieldWidth, std::string ID, float *Item, int ComboWidth, std::string Name, const char* CurrentItem, const char* ItemList[], int OutputHochzahl)
 {
 	ImGui::SetCursorPos(ImVec2{ (float)x,(float)y });
 	ImGui::SetNextItemWidth(InputFieldWidth);
 	ImGui::DragFloat(ID.c_str(), Item, 0.5f);
 	ImGui::SameLine();
 	ImGui::PushItemWidth(ComboWidth);
-	ImGui::Combo(Name.c_str(), CurrentItem, ItemList, 8);
+
+	if (ImGui::BeginCombo(Name.c_str(), CurrentItem)) // The second parameter is the label previewed before opening the combo.IM_ARRAYSIZE(ItemList)
+	{
+		for (int n = 0; n < sizeof(&ItemList); n++)
+		{
+			bool is_selected = (CurrentItem == ItemList[n]);
+			if (ImGui::Selectable(ItemList[n], is_selected))
+				CurrentItem = ItemList[n];
+			if (is_selected)
+				ImGui::SetItemDefaultFocus();   // Set the initial focus when opening the combo (scrolling + for keyboard navigation support in the upcoming navigation branch)
+		}
+		ImGui::EndCombo();
+	}
+
 	OutputHochzahl = CurrentItemToExponent(*CurrentItem);
 
 	char Return[] = { *Item,OutputHochzahl};
@@ -45,15 +58,15 @@ int Rechnerhilfsfunktionen::CurrentItemToExponent(int Item)
 		itemOld = Item;
 		if (itemOld < 4)
 		{
-			if (itemOld == 3)
-				Hochzahl = 3;
-			if (itemOld == 2)
-				Hochzahl = 6;
+			if (itemOld == 0)
+				Hochzahl = 13;
 			if (itemOld == 1)
 				Hochzahl = 9;
 			if (itemOld == 2)
-				Hochzahl = 13;
-		}
+				Hochzahl = 6;
+			if (itemOld == 3)
+				Hochzahl = 3;
+		} 
 		if (itemOld == 4) //4 = 10^1
 			Hochzahl = 0;
 		if (itemOld > 4)
@@ -71,26 +84,26 @@ int Rechnerhilfsfunktionen::CurrentItemToExponent(int Item)
 	return Hochzahl;
 }
 
-int Rechnerhilfsfunktionen::ExponentToCurrentItem(int Hochzahl)
+int Rechnerhilfsfunktionen::ExponentToCurrentItem(int Hochzahl2)
 {
 	int Item = 0;
-	if (itemOld != Hochzahl)
+	if (itemOld != Hochzahl2)
 	{
-		itemOld = Hochzahl;
-		if (itemOld < 4)
+		itemOld = Hochzahl2;
+		if (itemOld > 0)
 		{
-			if (itemOld == 3)
-				Item = 3;
-			if (itemOld == 6)
-				Item = 2;
+			if (itemOld == 13)
+				Item = 0;
 			if (itemOld == 9)
 				Item = 1;
-			if (itemOld == 13)
+			if (itemOld == 6)
 				Item = 2;
-		}
-		if (itemOld == 4) //4 = 10^1
-			Item = 0;
-		if (itemOld > 4)
+			if (itemOld == 3)
+				Item = 3;
+		} 
+		if (itemOld == 0) //4 = 10^1
+			Item = 4;
+		if (itemOld < 0)
 		{
 			if (itemOld == -3)
 				Item = 5;

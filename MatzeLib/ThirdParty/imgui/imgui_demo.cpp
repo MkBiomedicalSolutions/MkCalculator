@@ -875,6 +875,7 @@ static void ShowDemoWindowWidgets()
                 if (ImGui::Selectable(items[n], is_selected))
                     item_current = items[n];
                 if (is_selected)
+
                     ImGui::SetItemDefaultFocus();   // Set the initial focus when opening the combo (scrolling + for keyboard navigation support in the upcoming navigation branch)
             }
             ImGui::EndCombo();
